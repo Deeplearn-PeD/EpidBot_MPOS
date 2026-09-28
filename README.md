@@ -16,6 +16,15 @@ mobile chat interface with voice support: replies can be spoken aloud (TTS) and,
 on devices with a microphone, messages can be dictated (STT) or transcribed from
 a WAV file.
 
+<div align="center">
+<table>
+  <tr>
+    <td align="center"><img src="docs/assets/App.png" alt="EpidBot in the MicroPythonOS launcher" width="300"><br><sub>EpidBot in the MicroPythonOS launcher</sub></td>
+    <td align="center"><img src="docs/assets/chat.png" alt="Chatting with EpidBot" width="300"><br><sub>Chatting with EpidBot (TTS button on the right)</sub></td>
+  </tr>
+</table>
+</div>
+
 ```
 com_kwarai_epidbot/          the MicroPythonOS app (install this folder)
 ├── MANIFEST.JSON            app manifest (launcher activity)
