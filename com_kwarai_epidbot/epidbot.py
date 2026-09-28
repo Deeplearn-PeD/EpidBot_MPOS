@@ -268,6 +268,9 @@ class EpidBotChat(Activity):
         self.mic_btn.set_size(lv.SIZE_CONTENT, lv.SIZE_CONTENT)
         self.mic_lbl.center()
         self.mic_btn.add_event_cb(lambda e: self.on_mic_clicked(), lv.EVENT.CLICKED, None)
+        self.mic_btn.add_event_cb(
+            lambda e: self.on_file_transcribe(), lv.EVENT.LONG_PRESSED, None
+        )
 
         self.tts_btn = lv.button(input_row)
         self.tts_btn.set_size(lv.SIZE_CONTENT, lv.SIZE_CONTENT)
@@ -657,7 +660,8 @@ class EpidBotChat(Activity):
             self._send_message(text)
 
     def _transcribe_failed(self, msg):
-        self._set_status("STT: " + str(msg)[:20])
+        print("EpidBot: STT failed:", msg)
+        self._set_status("STT: " + str(msg)[:60])
 
     def on_file_transcribe(self):
         intent = Intent(
@@ -677,12 +681,14 @@ class EpidBotChat(Activity):
         TaskManager.create_task(self._transcribe_file_task(path))
 
     async def _transcribe_file_task(self, path):
+        print("EpidBot: transcribing file:", path)
         try:
             with open(path, "rb") as f:
                 data = f.read()
         except Exception as e:
             self._if_fg(self._transcribe_failed, str(e))
             return
+        print("EpidBot: WAV bytes:", len(data))
         if len(data) > 24_000_000:
             self._if_fg(self._transcribe_failed, "File too large")
             return

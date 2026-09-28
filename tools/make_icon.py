@@ -1,11 +1,35 @@
-"""Generate the EpidBot 64x64 app icon (chat bubble + pulse line) as a PNG.
+"""Generate the EpidBot 64x64 app icon.
 
-Pure stdlib (zlib + struct), no PIL required.
+Prefers the project logo (../epidbot/assets/epidbot.webp) converted via
+Pillow; falls back to a stdlib-drawn chat-bubble + pulse icon.
 """
 
 import struct
 import sys
 import zlib
+
+SIZE = 64
+
+LOGO_CANDIDATES = (
+    "../epidbot/assets/epidbot.webp",
+    "../epidbot/assets/epidbot.png",
+)
+
+
+def icon_from_logo(path, out):
+    try:
+        from PIL import Image
+    except ImportError:
+        print("Pillow not available; drawing fallback icon")
+        return False
+    logo = Image.open(path).convert("RGBA")
+    logo.thumbnail((SIZE, SIZE), Image.LANCZOS)
+    canvas = Image.new("RGBA", (SIZE, SIZE), (0, 0, 0, 0))
+    x = (SIZE - logo.width) // 2
+    y = (SIZE - logo.height) // 2
+    canvas.paste(logo, (x, y), logo)
+    canvas.save(out, "PNG", optimize=True)
+    return True
 
 SIZE = 64
 
@@ -111,4 +135,16 @@ def write_png(path):
 
 if __name__ == "__main__":
     out = sys.argv[1] if len(sys.argv) > 1 else "com_kwarai_epidbot/icon_64x64.png"
-    write_png(out)
+    if len(sys.argv) > 2 and sys.argv[2] == "--fallback" or "--fallback" in sys.argv:
+        write_png(out)
+    else:
+        import os
+
+        for candidate in LOGO_CANDIDATES:
+            if os.path.exists(candidate):
+                if icon_from_logo(candidate, out):
+                    print("Wrote %s from %s" % (out, candidate))
+                    break
+        else:
+            print("logo not found; drawing fallback icon")
+            write_png(out)
