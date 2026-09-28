@@ -1,5 +1,15 @@
 # EpidBot_MPOS
 
+<div align="center">
+
+[![Tests](https://github.com/Deeplearn-PeD/EpidBot_MPOS/actions/workflows/test.yml/badge.svg)](.github/workflows/test.yml)
+[![License: MIT](https://img.shields.io/github/license/Deeplearn-PeD/EpidBot_MPOS)](LICENSE)
+[![MicroPython](https://img.shields.io/badge/MicroPython-1.20%2B-8A2BE2?logo=micropython&logoColor=white)](https://micropython.org)
+[![Platform](https://img.shields.io/badge/platform-MicroPythonOS%20%C2%B7%20ESP32--S3-008080)](https://micropythonos.com)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue)](CHANGELOG.md)
+
+</div>
+
 Chat client for [EpidBot](https://github.com/fccoelho/epidbot) running on
 [MicroPythonOS](https://micropythonos.com). Gives EpidBot users with an API key a
 mobile chat interface with voice support: replies can be spoken aloud (TTS) and,
