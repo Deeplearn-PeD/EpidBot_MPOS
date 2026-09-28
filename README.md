@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/github/license/Deeplearn-PeD/EpidBot_MPOS)](LICENSE)
 [![MicroPython](https://img.shields.io/badge/MicroPython-1.20%2B-8A2BE2?logo=micropython&logoColor=white)](https://micropython.org)
 [![Platform](https://img.shields.io/badge/platform-MicroPythonOS%20%C2%B7%20ESP32--S3-008080)](https://micropythonos.com)
-[![Version](https://img.shields.io/badge/version-0.2.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/github/v/tag/Deeplearn-PeD/EpidBot_MPOS?sort=semver&label=version)](https://github.com/Deeplearn-PeD/EpidBot_MPOS/releases)
 
 </div>
 
