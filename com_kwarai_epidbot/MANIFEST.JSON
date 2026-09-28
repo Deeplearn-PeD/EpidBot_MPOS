@@ -1,0 +1,18 @@
+{
+  "name": "EpidBot",
+  "publisher": "kwar-ai",
+  "short_description": "Epidemic intelligence chat",
+  "long_description": "Chat client for the EpidBot epidemic intelligence assistant. Ask about outbreaks, vectors and surveillance data. Replies can be read aloud (TTS) and, where a microphone is available, messages can be dictated.",
+  "fullname": "com_kwarai_epidbot",
+  "version": "0.2.0",
+  "categories": ["Utilities"],
+  "activities": [
+    {
+      "entrypoint": "epidbot.py",
+      "classname": "EpidBotChat",
+      "intent_filters": [
+        {"action": "main", "category": "launcher"}
+      ]
+    }
+  ]
+}

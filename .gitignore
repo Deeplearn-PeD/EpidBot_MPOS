@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# EpidBot MPOS app runtime/build artifacts
+__pycache__/
+com_kwarai_epidbot/prefs/
+*.wav
