@@ -250,7 +250,7 @@ class EpidBotChat(Activity):
 
         self.input_textarea = lv.textarea(input_row)
         self.input_textarea.set_one_line(True)
-        self.input_textarea.set_width(lv.pct(55))
+        self.input_textarea.set_width(lv.pct(40))
         self.input_textarea.set_placeholder_text("Ask EpidBot...")
         self.input_textarea.set_max_length(1000)
         self.input_textarea.set_flex_grow(1)
@@ -265,7 +265,10 @@ class EpidBotChat(Activity):
         self.mic_lbl = lv.label()
         self.mic_lbl.set_text(lv.SYMBOL.AUDIO)
         self.mic_btn = lv.button(input_row)
-        self.mic_btn.set_size(lv.SIZE_CONTENT, lv.SIZE_CONTENT)
+        self.mic_btn.set_size(
+            DisplayMetrics.pct_of_width(15), DisplayMetrics.pct_of_width(15)
+        )
+        self.mic_btn.set_ext_click_area(10)
         self.mic_lbl.center()
         self.mic_btn.add_event_cb(lambda e: self.on_mic_clicked(), lv.EVENT.CLICKED, None)
         self.mic_btn.add_event_cb(
@@ -273,7 +276,10 @@ class EpidBotChat(Activity):
         )
 
         self.tts_btn = lv.button(input_row)
-        self.tts_btn.set_size(lv.SIZE_CONTENT, lv.SIZE_CONTENT)
+        self.tts_btn.set_size(
+            DisplayMetrics.pct_of_width(15), DisplayMetrics.pct_of_width(15)
+        )
+        self.tts_btn.set_ext_click_area(10)
         tts_lbl = lv.label(self.tts_btn)
         tts_lbl.set_text(TTS_SYMBOL)
         tts_lbl.center()

@@ -10,6 +10,7 @@ Free of lvgl/mpos imports so it is unit-testable on CPython.
 """
 
 import socket as _socket
+import time as _time
 
 try:
     import _thread
@@ -46,7 +47,6 @@ _SAVED = """<!doctype html><html><head><meta name="viewport" content="width=devi
 
 LOCALES = [("English", "en"), ("Portugues", "pt"), ("Espanol", "es")]
 
-_ACCEPT_TIMEOUT_S = 2
 _REQUEST_TIMEOUT_S = 8
 
 
@@ -205,10 +205,22 @@ class ProvisionServer:
         """Bind, listen and spawn the serving thread. Returns the URL."""
         self._sock = _socket.socket(_socket.AF_INET, _socket.SOCK_STREAM)
         self._sock.setsockopt(_socket.SOL_SOCKET, _socket.SO_REUSEADDR, 1)
-        addr = _socket.getaddrinfo("0.0.0.0", self.port)[0][4]
+        # Bind the specific local IP when available: on MicroPythonOS/ESP32
+        # binding to "0.0.0.0" succeeds but the listener never accepts
+        # connections (all clients get ECONNRESET/refused). Right after a
+        # reboot Wi-Fi may still be connecting, so wait a little for it.
+        host = get_local_ip()
+        waited = 0
+        while host is None and waited < 10:
+            _time.sleep(1)
+            waited += 1
+            host = get_local_ip()
+        addr = _socket.getaddrinfo(host or "0.0.0.0", self.port)[0][4]
         self._sock.bind(addr)
         self._sock.listen(2)
-        self._sock.settimeout(_ACCEPT_TIMEOUT_S)
+        # NOTE: no settimeout() here — on MicroPythonOS/ESP32 lwIP, setting a
+        # receive timeout on a listening socket breaks it: connections are
+        # refused/reset. stop() closes the socket, which unblocks accept().
         self.active = True
         if _thread is not None:
             try:

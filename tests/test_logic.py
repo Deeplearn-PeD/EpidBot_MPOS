@@ -362,9 +362,10 @@ class ProvisionTests(unittest.TestCase):
         import time
 
         port = 8600 + (os.getpid() % 400)
+        bound_host = ["127.0.0.1"]  # updated once the server reports its URL
 
         def request(method, path, body=None):
-            conn = http.client.HTTPConnection("127.0.0.1", port, timeout=5)
+            conn = http.client.HTTPConnection(bound_host[0], port, timeout=5)
             headers = {"Content-Length": str(len(body))} if body is not None else {}
             conn.request(method, path, body=body, headers=headers)
             resp = conn.getresponse()
@@ -378,6 +379,7 @@ class ProvisionTests(unittest.TestCase):
         )
         url = srv.start()
         self.assertTrue(url.startswith("http://"))
+        bound_host[0] = url.split("//", 1)[1].split(":", 1)[0]
         try:
             deadline = time.time() + 3
             while time.time() < deadline:
