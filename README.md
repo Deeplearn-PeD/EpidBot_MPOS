@@ -93,12 +93,18 @@ esptool), connect USB, then:
 tools/install_device.sh
 ```
 
-> **Note on the Waveshare ESP32-S3-Touch-LCD-1.54:** this board is not yet in
-> MicroPythonOS' supported-hardware list. A board definition (ST7789 240x240
-> display, CST816T touch, ES8311 codec) adapted from the supported
-> ESP32-S3-Touch-LCD-2 is needed before the app can run on it. The 1.54 has a
-> speaker but **no microphone**, so voice input there is file-based only; TTS
-> output works through the speaker.
+> **Note on the Waveshare ESP32-S3-Touch-LCD-1.54:** supported as of
+> [MicroPythonOS PR #310](https://github.com/MicroPythonOS/MicroPythonOS/pull/310)
+> — build MicroPythonOS from that branch (or any later release) before
+> installing this app. Validated on hardware: ST7789 display, CST816S touch,
+> TTS speaker output and STT microphone input (ES8311/ES7210), battery gauge
+> and power button.
+>
+> Power button behavior: **hold ~2 s** to enter standby (the charger IC then
+> cuts the battery after ~30 s of standby, so the device truly powers off);
+> **press** to wake/boot — if a long standby let the charger IC power down
+> completely, plug USB briefly to wake it. The **⏻** button in the launcher
+> drawer does the same as holding PWR.
 
 ## Getting an API key
 
@@ -145,7 +151,6 @@ checkout (kept out of this repo; upstreamable):
 ### Roadmap
 
 - WebSocket streaming (`/api/v1/chat/stream`) for token-by-token replies
-- Board definition + bring-up for Waveshare ESP32-S3-Touch-LCD-1.54
 - Server-driven voice list (from `GET /api/v1/voice/status`)
 - Conversation history picker (EpidBot sessions API)
 
